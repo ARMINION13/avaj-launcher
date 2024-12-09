@@ -27,6 +27,14 @@ $(NAME):
 	@echo "¡Compilación completada!"
 
 # - - - - - - - - - - - - - - - - - #
+# - - - - - - - T E S T - - - - - - #
+# - - - - - - - - - - - - - - - - - #
+
+test:
+	@java -jar ./ajav-launcher.jar scenario.txt
+
+
+# - - - - - - - - - - - - - - - - - #
 # - - - - L I M P I E Z A - - - - - #
 # - - - - - - - - - - - - - - - - - #
 
