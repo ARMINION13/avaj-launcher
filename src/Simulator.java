@@ -51,6 +51,11 @@ public class Simulator
 
     public static void main(String[] args)
     {
+        if (args.length != 1)
+        {
+            System.out.print("Missing Scenario file\n");
+            return ;
+        }
         if (scenario(args[0]) == false)
         {
             System.out.print("Scenario Parse Error\n");
@@ -81,7 +86,7 @@ public class Simulator
     }
 
     static public boolean scenario(String f_path)
-    {
+    {            
         try (BufferedReader buffer = new BufferedReader(new FileReader(f_path)))
         {
             String line;
