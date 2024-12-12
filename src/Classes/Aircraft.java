@@ -1,15 +1,16 @@
 package Classes;
 
-public class Aircraft implements Flyable {
+public class Aircraft extends Flyable {
 
-    // to do initialize?
-    public long id;
-    public String name;
-    public Coordinates coordinates;
+    protected long id;
+    protected String name;
+    protected Coordinates coordinates;
 
     protected Aircraft(long p_id, String p_name, Coordinates p_coordinate)
     {
-        //to do
+        this.id = p_id;
+        this.name = p_name;
+        this.coordinates = p_coordinate;
     }
 
     public void updateConditions()
@@ -19,19 +20,20 @@ public class Aircraft implements Flyable {
 
     public void registerTower(WeatherTower p_tower)
     {
-        //to do
+        this.weatherTower = p_tower;               
     }
 
     class Coordinates {
 
-        //to do initialize?
         private int longitude;
         private int latitute;
         private int height;
 
         Coordinates(int p_longitute, int p_latitute, int p_height)
         {
-            //to do
+            this.longitude = p_longitute;
+            this.latitute = p_latitute;
+            this.height = p_height;
         }
 
         public int getLongitute()
