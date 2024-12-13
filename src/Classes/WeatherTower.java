@@ -7,7 +7,7 @@ public class WeatherTower extends Tower {
     public String getWeather(Coordinates p_coordinates)
     {
         //to fix probably
-        return p_coordinates.getLongitute() + " " + p_coordinates.getLatitute() + " " + p_coordinates.getHeight();
+        return "SUN";
     }
 
     public void changeWeather()

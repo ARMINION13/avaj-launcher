@@ -15,7 +15,7 @@ public class Aircraft extends Flyable {
 
     public void updateConditions()
     {
-        //to do
+
     }
 
     public void registerTower(WeatherTower p_tower)

@@ -58,6 +58,8 @@ public class Tower {
 
     protected void conditionChanged()
     {
-        //to do
+        //to improve
+        for (int i = 0; i < this.observers.size(); i++)
+            this.observers.get(i).updateConditions();
     }
 }

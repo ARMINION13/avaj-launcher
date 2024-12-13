@@ -64,13 +64,13 @@ public class Simulator
 
 
         //Test parsing
-        /*System.out.print("Loops Number : " + _loopNbr + "\n");
+        System.out.print("Loops Number : " + _loopNbr + "\n");
         for (int i = 0; i < _aircrafts.size(); i++)
         {
             System.out.print(_aircrafts.get(i)._type + " " + _aircrafts.get(i)._id + " "
                 + _aircrafts.get(i)._longitude + " " + _aircrafts.get(i)._latitute + " " + 
                 _aircrafts.get(i)._height + " " + "\n");
-        }*/
+        }
     }
 
     static private boolean idUsed(String id)
