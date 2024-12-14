@@ -4,14 +4,15 @@ import Classes.Aircraft.Coordinates;
 
 public class WeatherTower extends Tower {
 
+    //private WeatherProvider wp = WeatherProvider.getInstance();
+
     public String getWeather(Coordinates p_coordinates)
     {
-        //to fix probably
-        return "SUN";
+        return ;
     }
 
     public void changeWeather()
     {
-        //to do
+        wp.changeSeed();
     }
 }
