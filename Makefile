@@ -6,7 +6,7 @@ SRC_DIR = ./src
 BIN_DIR = ./bin
 
 # Clase principal
-MAIN_CLASS = Simulator
+MAIN_CLASS = Main
 
 # Manifiesto
 MANIFEST = ./MANIFEST.MF
@@ -20,7 +20,7 @@ all: $(NAME)
 # Compilar y crear el JAR
 $(NAME): 
 	@echo "Compilando los archivos Java..."
-	@javac -d $(BIN_DIR) $(SRC_DIR)/*.java
+	@javac -d $(BIN_DIR) $(SRC_DIR)/*.java $(SRC_DIR)/Classes/*.java
 	@echo "Creando el archivo JAR..."
 	@echo "Main-Class: $(MAIN_CLASS)" > $(MANIFEST)
 	@jar cfm $(NAME) $(MANIFEST) -C $(BIN_DIR) .

@@ -1,3 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Simulator.java                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgirondo <rgirondo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/14 19:56:51 by rgirondo          #+#    #+#             */
+/*   Updated: 2024/12/14 20:56:50 by rgirondo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+package Classes;
+
 import java.util.*;
 import java.io.*;
 
@@ -48,8 +62,10 @@ public class Simulator
 {
     static public  int _loopNbr;
     static public  List<AircraftParse> _aircrafts = new ArrayList<>();
+    static public  WeatherTower _wt = new WeatherTower();
+    static public  AircraftFactory _af = AircraftFactory.getInstance();
 
-    public static void main(String[] args)
+    public static void start(String[] args)
     {
         if (args.length != 1)
         {
@@ -62,14 +78,39 @@ public class Simulator
             return ;
         }
 
-
         //Test parsing
+        System.out.print(   "# - - - - - - - - - - - - - - - - - #\n" +
+                            "# - - - - - P A R S I N G - - - - - #\n" + 
+                            "# - - - - - - - - - - - - - - - - - #\n\n");
         System.out.print("Loops Number : " + _loopNbr + "\n");
         for (int i = 0; i < _aircrafts.size(); i++)
         {
             System.out.print(_aircrafts.get(i)._type + " " + _aircrafts.get(i)._id + " "
                 + _aircrafts.get(i)._longitude + " " + _aircrafts.get(i)._latitute + " " + 
                 _aircrafts.get(i)._height + " " + "\n");
+            
+                }
+                
+                
+        //Start Simulation
+        System.out.print(   "\n\n" +
+                            "# - - - - - - - - - - - - - - - - - #\n" +
+                            "# - - - - S I M U L A T I O N - - - #\n" + 
+                            "# - - - - - - - - - - - - - - - - - #\n\n");
+        Flyable a;
+ 
+        for (int j = 0; j < _aircrafts.size(); j++)
+        {
+            a = _af.newAircraft(_aircrafts.get(j).getType(), _aircrafts.get(j).getId(), 
+                new Coordinates(_aircrafts.get(j).getLongitute(), _aircrafts.get(j).getLatitute(), _aircrafts.get(j).getHeight()));
+            if (a != null)
+                a.registerTower(_wt);
+            _wt.register(a);
+        }
+ 
+        for (int i = 0; i < _loopNbr; i++)
+        {
+            _wt.changeWeather();
         }
     }
 
