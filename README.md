@@ -1,2 +1,2 @@
-# ajav-launcher
+# avaj-launcher
 Java learning project
