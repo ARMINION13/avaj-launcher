@@ -1,5 +1,5 @@
 # Nombre del archivo JAR
-NAME = ajav-launcher.jar
+NAME = avaj-launcher.jar
 
 # Directorios
 SRC_DIR = ./src
@@ -31,7 +31,7 @@ $(NAME):
 # - - - - - - - - - - - - - - - - - #
 
 test:
-	@java -jar ./ajav-launcher.jar scenario.txt
+	@java -jar ./avaj-launcher.jar scenario.txt
 
 
 # - - - - - - - - - - - - - - - - - #
@@ -41,9 +41,11 @@ test:
 fclean:
 	@echo "Limpiando archivos compilados y generados..."
 	@rm -rf $(SRC_DIR)/*.class
+	@rm -rf $(SRC_DIR)/Classes/*.class
 	@rm -rf $(BIN_DIR)
 	@rm -f $(NAME)
 	@rm -f $(MANIFEST)
+	@rm -rf simulation.txt
 	@echo "¡Limpieza completada!"
 
 re: fclean all

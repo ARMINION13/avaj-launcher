@@ -36,21 +36,21 @@ public class Tower {
         if (p_flyable instanceof Helicopter)
         {
             Helicopter helicopter = (Helicopter)p_flyable;
-            if (this.observers.remove(helicopter))
+            if (!this.observers.remove(helicopter))
                 return ;
             System.out.print("Tower says: Helicopter#" + helicopter.name + "(" + helicopter.id + ")" + " unregistered from weather tower\n");
         }
         if (p_flyable instanceof Baloon)
         {
             Baloon baloon = (Baloon)p_flyable;
-            if (this.observers.remove(baloon))
+            if (!this.observers.remove(baloon))
                 return ;
             System.out.print("Tower says: Baloon#" + baloon.name + "(" + baloon.id + ")" + " unregistered from weather tower\n");
         }
         if (p_flyable instanceof JetPlane)
         {
             JetPlane jetPlane = (JetPlane)p_flyable;
-            if (this.observers.remove(jetPlane))
+            if (!this.observers.remove(jetPlane))
                 return ;
             System.out.print("Tower says: JetPlane#" + jetPlane.name + "(" + jetPlane.id + ")" + " unregistered from weather tower\n");
         }
@@ -58,8 +58,11 @@ public class Tower {
 
     protected void conditionChanged()
     {
-        //to improve
-        for (int i = 0; i < this.observers.size(); i++)
-            this.observers.get(i).updateConditions();
+        List<Flyable> copy = new ArrayList<>(observers);
+
+        for (int i = 0; i < copy.size(); i++)
+        {
+            copy.get(i).updateConditions();
+        }
     }
 }

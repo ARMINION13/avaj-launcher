@@ -6,7 +6,7 @@
 /*   By: rgirondo <rgirondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 19:56:51 by rgirondo          #+#    #+#             */
-/*   Updated: 2024/12/14 20:56:50 by rgirondo         ###   ########.fr       */
+/*   Updated: 2024/12/15 21:55:13 by rgirondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,87 +31,76 @@ class AircraftParse
         _latitute = Integer.parseInt(parameters[3]);
         _height = Integer.parseInt(parameters[4]);
     }
-
-    public String getId()
-    {
-        return this._id;
-    }
-
-    public String getType()
-    {
-        return this._type;
-    }
-
-    public int getLongitute()
-    {
-        return this._longitude;
-    }
-
-    public int getLatitute()
-    {
-        return this._latitute;
-    }
-
-    public int getHeight()
-    {
-        return this._height;
-    }
 }
 
 public class Simulator
 {
-    static public  int _loopNbr;
-    static public  List<AircraftParse> _aircrafts = new ArrayList<>();
-    static public  WeatherTower _wt = new WeatherTower();
-    static public  AircraftFactory _af = AircraftFactory.getInstance();
+    static protected  int _loopNbr;
+    static protected  List<AircraftParse> _aircrafts = new ArrayList<>();
+    static protected  WeatherTower _wt = new WeatherTower();
+    static protected  AircraftFactory _af = AircraftFactory.getInstance();
+    static protected  PrintStream _ps;
+    static public     File _f = new File("simulation.txt");;
 
     public static void start(String[] args)
     {
-        if (args.length != 1)
+        try
         {
-            System.out.print("Missing Scenario file\n");
-            return ;
-        }
-        if (scenario(args[0]) == false)
-        {
-            System.out.print("Scenario Parse Error\n");
-            return ;
-        }
+            _ps = new PrintStream(_f);
+            if (args.length != 1)
+            {
+                System.out.print("Missing Scenario file\n");
+                return ;
+            }
+            if (scenario(args[0]) == false)
+            {
+                System.out.print("Scenario Parse Error\n");
+                return ;
+            }
 
-        //Test parsing
-        System.out.print(   "# - - - - - - - - - - - - - - - - - #\n" +
-                            "# - - - - - P A R S I N G - - - - - #\n" + 
-                            "# - - - - - - - - - - - - - - - - - #\n\n");
-        System.out.print("Loops Number : " + _loopNbr + "\n");
-        for (int i = 0; i < _aircrafts.size(); i++)
-        {
-            System.out.print(_aircrafts.get(i)._type + " " + _aircrafts.get(i)._id + " "
-                + _aircrafts.get(i)._longitude + " " + _aircrafts.get(i)._latitute + " " + 
-                _aircrafts.get(i)._height + " " + "\n");
-            
-                }
+            System.setOut(_ps);
+            //Test parsing
+/*             System.out.print(   "# - - - - - - - - - - - - - - - - - #\n" +
+                                "# - - - - - P A R S I N G - - - - - #\n" + 
+                                "# - - - - - - - - - - - - - - - - - #\n\n");
+            System.out.print("Loops Number : " + _loopNbr + "\n");
+            for (int i = 0; i < _aircrafts.size(); i++)
+            {
+                System.out.print(_aircrafts.get(i)._type + " " + _aircrafts.get(i)._id + " "
+                    + _aircrafts.get(i)._longitude + " " + _aircrafts.get(i)._latitute + " " + 
+                    _aircrafts.get(i)._height + " " + "\n");
                 
-                
-        //Start Simulation
-        System.out.print(   "\n\n" +
-                            "# - - - - - - - - - - - - - - - - - #\n" +
-                            "# - - - - S I M U L A T I O N - - - #\n" + 
-                            "# - - - - - - - - - - - - - - - - - #\n\n");
-        Flyable a;
- 
-        for (int j = 0; j < _aircrafts.size(); j++)
-        {
-            a = _af.newAircraft(_aircrafts.get(j).getType(), _aircrafts.get(j).getId(), 
-                new Coordinates(_aircrafts.get(j).getLongitute(), _aircrafts.get(j).getLatitute(), _aircrafts.get(j).getHeight()));
-            if (a != null)
-                a.registerTower(_wt);
-            _wt.register(a);
+                    }
+                    
+                    
+            //Start Simulation
+            System.out.print(   "\n\n" +
+                                "# - - - - - - - - - - - - - - - - - #\n" +
+                                "# - - - - S I M U L A T I O N - - - #\n" + 
+                                "# - - - - - - - - - - - - - - - - - #\n\n"); */
+            Flyable a;
+    
+            for (int j = 0; j < _aircrafts.size(); j++)
+            {
+                if (_aircrafts.get(j)._height > 100)
+                    _aircrafts.get(j)._height = 100;
+                a = _af.newAircraft(_aircrafts.get(j)._type, _aircrafts.get(j)._id, 
+                    new Coordinates(_aircrafts.get(j)._longitude, _aircrafts.get(j)._latitute, _aircrafts.get(j)._height));
+                if (a != null)
+                    a.registerTower(_wt);
+                _wt.register(a);
+            }
+    
+            for (int i = 0; i < _loopNbr; i++)
+            {
+                _wt.changeWeather();
+            }
+            System.setOut(System.out);
         }
- 
-        for (int i = 0; i < _loopNbr; i++)
+        catch(FileNotFoundException e)
         {
-            _wt.changeWeather();
-        }
+            System.out.print("Error writing simulator.txt\n");
+        }    
     }
 
     static private boolean idUsed(String id)
@@ -120,7 +109,7 @@ public class Simulator
             return false;
         for (int i = 0; i < _aircrafts.size(); i++)
         {
-            if (id == _aircrafts.get(i).getId())
+            if (id == _aircrafts.get(i)._id)
                 return true;
         }
         return false;
