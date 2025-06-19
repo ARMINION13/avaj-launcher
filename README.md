@@ -1,2 +1,2 @@
 # avaj-launcher
-Java learning project
+Java project about creating a simple airport management simulation
